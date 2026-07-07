@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Aayush — Mechanical Engineer, Manufacturing &amp; Robotics</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0E2A44;
+    --bg-alt:#123350;
+    --bg-alt2:#0B2036;
+    --paper:#EAF1F6;
+    --ink:#F5F8FA;
+    --muted:#93AFC4;
+    --muted-dim:#5F7E96;
+    --accent:#FF6A39;
+    --accent-2:#F2C14E;
+    --line:rgba(234,241,246,0.16);
+    --line-strong:rgba(234,241,246,0.32);
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--ink);
+    font-family:'IBM Plex Sans', sans-serif;
+    -webkit-font-smoothing:antialiased;
+  }
+  ::selection{background:var(--accent); color:var(--bg-alt2);}
+  h1,h2,h3{font-family:'Space Grotesk', sans-serif; margin:0; letter-spacing:-0.01em;}
+  .mono{font-family:'IBM Plex Mono', monospace;}
+  a{color:inherit;}
+
+  /* ---------- Layout shell ---------- */
+  .shell{
+    display:grid;
+    grid-template-columns:64px 1fr;
+    min-height:100vh;
+  }
+  @media (max-width:820px){
+    .shell{grid-template-columns:1fr;}
+    .sheet-index{display:none;}
+    .mobile-index{display:flex !important;}
+  }
+
+  /* ---------- Sheet index (left rail nav) ---------- */
+  .sheet-index{
+    position:sticky; top:0; height:100vh;
+    border-right:1px solid var(--line-strong);
+    display:flex; flex-direction:column; align-items:center;
+    justify-content:space-between;
+    padding:24px 0;
+    background:var(--bg-alt2);
+    z-index:20;
+  }
+  .sheet-index .brand-mark{
+    writing-mode:vertical-rl;
+    font-family:'IBM Plex Mono', monospace;
+    font-size:11px; letter-spacing:0.18em; color:var(--muted-dim);
+    text-transform:uppercase;
+  }
+  .sheet-index nav{display:flex; flex-direction:column; gap:2px; align-items:center;}
+  .sheet-index nav a{
+    writing-mode:vertical-rl;
+    font-family:'IBM Plex Mono', monospace;
+    font-size:11px; color:var(--muted-dim);
+    text-decoration:none; padding:10px 0; letter-spacing:0.12em;
+    border-left:2px solid transparent;
+    transition:color .2s ease, border-color .2s ease;
+  }
+  .sheet-index nav a.active,
+  .sheet-index nav a:hover{color:var(--accent-2); border-left-color:var(--accent);}
+
+  .mobile-index{
+    display:none; position:sticky; top:0; z-index:20;
+    background:var(--bg-alt2); border-bottom:1px solid var(--line-strong);
+    padding:10px 16px; gap:14px; overflow-x:auto;
+    font-family:'IBM Plex Mono', monospace; font-size:11px; letter-spacing:.08em;
+  }
+  .mobile-index a{white-space:nowrap; color:var(--muted); text-decoration:none;}
+  .mobile-index a.active{color:var(--accent-2);}
+
+  main{min-width:0;}
+  section{
+    padding:96px 8vw;
+    border-bottom:1px solid var(--line);
+    position:relative;
+  }
+  .sheet-tag{
+    position:absolute; top:24px; right:8vw;
+    font-family:'IBM Plex Mono', monospace; font-size:11px;
+    color:var(--muted-dim); letter-spacing:.1em;
+  }
+
+  /* ---------- Hero / Title block ---------- */
+  .hero{padding-top:64px; padding-bottom:80px;}
+  .titleblock-eyebrow{
+    font-family:'IBM Plex Mono', monospace; font-size:12px; letter-spacing:.2em;
+    color:var(--accent-2); text-transform:uppercase; margin-bottom:18px;
+  }
+  .hero h1{
+    font-size:clamp(2.6rem, 7vw, 5.2rem);
+    font-weight:700; color:var(--paper); line-height:1.02;
+  }
+  .hero .role{
+    font-size:clamp(1.1rem,2.4vw,1.6rem); color:var(--muted); margin-top:14px; font-weight:400;
+  }
+  .dim-line{
+    display:flex; align-items:center; gap:10px; margin:36px 0 32px; color:var(--muted-dim);
+  }
+  .dim-line::before, .dim-line::after{content:""; flex:1; height:1px; background:var(--line-strong);}
+  .dim-line span{font-family:'IBM Plex Mono', monospace; font-size:11px; letter-spacing:.1em;}
+
+  .titleblock{
+    display:grid; grid-template-columns:repeat(4,1fr); border:1px solid var(--line-strong);
+    max-width:760px; font-family:'IBM Plex Mono', monospace; font-size:12px;
+  }
+  .titleblock div{padding:12px 16px; border-right:1px solid var(--line-strong); border-bottom:1px solid var(--line-strong);}
+  .titleblock div:nth-child(4n){border-right:none;}
+  .titleblock label{display:block; color:var(--muted-dim); font-size:10px; letter-spacing:.1em; margin-bottom:4px; text-transform:uppercase;}
+  .titleblock strong{color:var(--paper); font-weight:600;}
+  @media (max-width:640px){ .titleblock{grid-template-columns:repeat(2,1fr);} .titleblock div:nth-child(4n){border-right:1px solid var(--line-strong);} .titleblock div:nth-child(2n){border-right:none;} }
+
+  /* ---------- Section heads ---------- */
+  .section-head{display:flex; align-items:baseline; gap:16px; margin-bottom:48px; flex-wrap:wrap;}
+  .section-head .num{font-family:'IBM Plex Mono', monospace; color:var(--accent); font-size:14px;}
+  .section-head h2{font-size:clamp(1.6rem,3.4vw,2.4rem); color:var(--paper);}
+  .section-head .sub{font-family:'IBM Plex Mono', monospace; font-size:12px; color:var(--muted-dim); margin-left:auto;}
+
+  p{color:var(--muted); line-height:1.7; font-size:1rem; max-width:64ch;}
+  .lede{font-size:1.15rem; color:var(--paper); max-width:66ch;}
+
+  /* ---------- About ---------- */
+  .about-grid{display:grid; grid-template-columns:1.3fr 1fr; gap:64px;}
+  @media (max-width:760px){.about-grid{grid-template-columns:1fr;}}
+  .spec-list{border-top:1px solid var(--line-strong);}
+  .spec-list .row{display:flex; justify-content:space-between; gap:16px; padding:14px 0; border-bottom:1px solid var(--line);}
+  .spec-list .row .k{font-family:'IBM Plex Mono', monospace; font-size:11px; color:var(--muted-dim); letter-spacing:.06em; text-transform:uppercase;}
+  .spec-list .row .v{color:var(--paper); text-align:right; font-size:14px;}
+
+  /* ---------- Experience timeline ---------- */
+  .timeline{border-left:2px solid var(--line-strong); padding-left:32px; display:flex; flex-direction:column; gap:44px;}
+  .t-item{position:relative;}
+  .t-item::before{
+    content:""; position:absolute; left:-38px; top:4px; width:10px; height:10px; border-radius:50%;
+    background:var(--accent); box-shadow:0 0 0 4px var(--bg);
+  }
+  .t-item .t-date{font-family:'IBM Plex Mono', monospace; font-size:11px; color:var(--accent-2); letter-spacing:.1em; text-transform:uppercase;}
+  .t-item h3{color:var(--paper); font-size:1.25rem; margin:8px 0 6px;}
+  .t-item .t-org{color:var(--muted); font-size:.95rem; margin-bottom:10px; display:block;}
+
+  /* ---------- Projects ---------- */
+  .proj-grid{display:grid; grid-template-columns:repeat(2,1fr); gap:1px; background:var(--line-strong); border:1px solid var(--line-strong);}
+  @media (max-width:760px){.proj-grid{grid-template-columns:1fr;}}
+  .proj-card{background:var(--bg); padding:0; position:relative; display:flex; flex-direction:column;}
+  .proj-img{width:100%; aspect-ratio:16/10; object-fit:cover; display:block; background:var(--bg-alt2); border-bottom:1px solid var(--line-strong);}
+  .proj-img:not([src]), .proj-img[src=""]{display:none;}
+  .proj-body{padding:28px 32px 32px;}
+  .proj-callout{
+    position:absolute; top:16px; right:16px; width:28px; height:28px; border-radius:50%;
+    border:1px solid var(--accent); background:var(--bg); color:var(--accent); font-family:'IBM Plex Mono', monospace;
+    font-size:12px; display:flex; align-items:center; justify-content:center; z-index:2;
+  }
+  .proj-body h3{color:var(--paper); font-size:1.15rem; margin-bottom:10px;}
+  .proj-meta{display:flex; flex-wrap:wrap; gap:8px 18px; margin:16px 0 4px; font-family:'IBM Plex Mono', monospace; font-size:11px; color:var(--muted-dim);}
+  .proj-meta span b{color:var(--accent-2); font-weight:500;}
+
+  /* ---------- Trading system ---------- */
+  .sys-panel{border:1px solid var(--line-strong); background:var(--bg-alt2); padding:36px; display:grid; grid-template-columns:1fr 1fr; gap:40px;}
+  @media (max-width:760px){.sys-panel{grid-template-columns:1fr;}}
+  .chip-row{display:flex; flex-wrap:wrap; gap:8px; margin-top:18px;}
+  .chip{
+    font-family:'IBM Plex Mono', monospace; font-size:11px; color:var(--muted); border:1px solid var(--line-strong);
+    padding:6px 12px; border-radius:2px;
+  }
+  .flow{display:flex; flex-wrap:wrap; align-items:center; gap:8px; font-family:'IBM Plex Mono', monospace; font-size:12px; color:var(--accent-2); margin-top:20px;}
+  .flow .arrow{color:var(--muted-dim);}
+
+  /* ---------- Media ---------- */
+  .media-grid{display:grid; grid-template-columns:repeat(4,1fr); gap:12px;}
+  @media (max-width:760px){.media-grid{grid-template-columns:repeat(2,1fr);}}
+  .media-tile{
+    aspect-ratio:4/5; border:1px solid var(--line-strong); background:var(--bg-alt2);
+    display:flex; align-items:center; justify-content:center; text-align:center; padding:14px;
+    font-family:'IBM Plex Mono', monospace; font-size:11px; color:var(--muted-dim);
+  }
+
+  /* ---------- Contact ---------- */
+  .contact-block{display:flex; flex-wrap:wrap; gap:48px; align-items:flex-end; justify-content:space-between;}
+  .cta-btn{
+    display:inline-flex; align-items:center; gap:10px; background:var(--accent); color:#1A1206;
+    font-family:'IBM Plex Mono', monospace; font-weight:600; font-size:13px; letter-spacing:.06em;
+    padding:16px 28px; text-decoration:none; text-transform:uppercase; border:none; cursor:pointer;
+  }
+  .cta-btn:hover{background:var(--accent-2);}
+  footer{padding:32px 8vw; font-family:'IBM Plex Mono', monospace; font-size:11px; color:var(--muted-dim); display:flex; justify-content:space-between; flex-wrap:wrap; gap:12px;}
+
+  .reveal{opacity:0; transform:translateY(16px); transition:opacity .6s ease, transform .6s ease;}
+  .reveal.in{opacity:1; transform:translateY(0);}
+  @media (prefers-reduced-motion:reduce){ .reveal{opacity:1; transform:none; transition:none;} html{scroll-behavior:auto;} }
+</style>
+</head>
+<body>
+
+<div class="shell">
+  <!-- Left rail sheet index -->
+  <aside class="sheet-index">
+    <span class="brand-mark">AAYUSH // DRAWING SET</span>
+    <nav id="nav-desktop">
+      <a href="#profile" data-target="profile">01 PROFILE</a>
+      <a href="#experience" data-target="experience">02 EXPERIENCE</a>
+      <a href="#projects" data-target="projects">03 PROJECTS</a>
+      <a href="#trading" data-target="trading">04 SKILLS</a>
+      
+      <a href="#contact" data-target="contact">05 CONTACT</a>
+    </nav>
+    <span class="brand-mark">REV. 2026-07</span>
+  </aside>
+
+  <main>
+    <div class="mobile-index" id="nav-mobile">
+      <a href="#profile" data-target="profile">01 PROFILE</a>
+      <a href="#experience" data-target="experience">02 EXPERIENCE</a>
+      <a href="#projects" data-target="projects">03 PROJECTS</a>
+      <a href="#trading" data-target="trading">04 SKILLS</a>
+      
+      <a href="#contact" data-target="contact">05 CONTACT</a>
+    </div>
+
+    <!-- HERO / TITLE BLOCK -->
+    <section class="hero" id="hero">
+      <div class="titleblock-eyebrow">SHEET 00 — GENERAL ARRANGEMENT</div>
+      <div style="display:flex; align-items:center; gap:28px; flex-wrap:wrap;">
+        <img src="images/profile-photo.jpg" alt="" style="width:96px; height:96px; object-fit:cover; border:1px solid var(--line-strong); border-radius:4px; display:block;" onerror="this.style.display='none'">
+        <div>
+          <h1>Aayush Marasini</h1>
+          <div class="role">Mechanical Engineer · NEC Licensed Engineer</div>
+        </div>
+      </div>
+      <div class="dim-line"><span>KATHMANDU, NEPAL</span></div>
+      <div class="titleblock">
+        <div><label>Discipline</label><strong>Mechanical Eng.</strong></div>
+        <div><label>License</label><strong>NEC Licensed Engineer</strong></div>
+        <div><label>Based in</label><strong>Kathmandu, NP</strong></div>
+        <div><label>Status</label><strong>Open to roles</strong></div>
+      </div>
+    </section>
+
+    <!-- PROFILE -->
+    <section id="profile">
+      <span class="sheet-tag">SHEET 01 / 05</span>
+      <div class="section-head reveal">
+        <span class="num">01</span>
+        <h2>Profile</h2>
+        <span class="sub">MATERIAL: CURIOSITY + DISCIPLINE</span>
+      </div>
+      <div class="about-grid">
+        <div class="reveal">
+          <p class="lede">Mechanical engineering graduate from Kathmandu University and an NEC Licensed Engineer, with hands-on experience across vehicle assembly systems, FMCG operations, and CAD-based engineering projects. Certified in SOLIDWORKS (CSWA, CSWP Sheet Metal) with strong exposure to 3D modelling, engineering documentation, and mechanical system design.</p>
+          <p>Interested in mechanical design, manufacturing engineering, industrial automation, and building services (HVAC/MEP) — currently exploring postgraduate study to build on this foundation.</p>
+        </div>
+        <div class="spec-list reveal">
+          <div class="row"><span class="k">Education</span><span class="v">B.E. Mechanical Eng., Kathmandu University</span></div>
+          <div class="row"><span class="k">License</span><span class="v">NEC Licensed Engineer</span></div>
+          <div class="row"><span class="k">Certifications</span><span class="v">CSWA · CSWP Sheet Metal</span></div>
+          <div class="row"><span class="k">Software</span><span class="v">SOLIDWORKS · AutoCAD · PVsyst</span></div>
+          <div class="row"><span class="k">Location</span><span class="v">Kathmandu, Nepal</span></div>
+          <div class="row"><span class="k">Languages</span><span class="v">English · Nepali · Hindi</span></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- EXPERIENCE -->
+    <section id="experience">
+      <span class="sheet-tag">SHEET 02 / 05</span>
+      <div class="section-head reveal">
+        <span class="num">02</span>
+        <h2>Experience &amp; Education</h2>
+        <span class="sub">ASSEMBLY SEQUENCE</span>
+      </div>
+      <div class="timeline">
+        <div class="t-item reveal">
+          <span class="t-date">Jul 2025 – Oct 2025</span>
+          <h3>Graduate Engineer Trainee</h3>
+          <span class="t-org">Hyundai Assembly Plant (Laxmi Motor Corporation), Parasi, Nepal</span>
+          <p>Supported end-to-end vehicle assembly of the Venue and Creta, ensuring productivity, quality, and safety per SOPs. Coordinated with production, quality, and material teams for smooth operations and on-time delivery.</p>
+        </div>
+        <div class="t-item reveal">
+          <span class="t-date">Mar 2025 – Jun 2025</span>
+          <h3>Engineering Intern</h3>
+          <span class="t-org">Chaudhary Group Industrial Park (CGIP), Nawalpur, Nepal</span>
+          <p>Developed and modified CAD models for mechanical components of a cheese ball extruder system. Gained exposure to industrial utility systems including beverage processing plants and captive power generation facilities, and supported technical documentation and equipment troubleshooting.</p>
+        </div>
+        <div class="t-item reveal">
+          <span class="t-date">2020 – 2025</span>
+          <h3>Bachelor in Mechanical Engineering</h3>
+          <span class="t-org">Kathmandu University, Dhulikhel, Nepal</span>
+          <p>Thesis: Photovoltaic Integrated Energy Modelling with Machine Learning — analyzed solar-grid integration using PVsyst to optimize photovoltaic system sizing and improve solar fraction through demand-side management techniques.</p>
+        </div>
+        <div class="t-item reveal">
+          <span class="t-date">2017 – 2019</span>
+          <h3>A Levels in Science</h3>
+          <span class="t-org">St. Xavier's College, Maitighar, Nepal</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- PROJECTS -->
+    <section id="projects">
+      <span class="sheet-tag">SHEET 03 / 05</span>
+      <div class="section-head reveal">
+        <span class="num">03</span>
+        <h2>Projects</h2>
+        <span class="sub">SELECTED WORK</span>
+      </div>
+      <div class="proj-grid reveal">
+        <div class="proj-card">
+          <img class="proj-img" src="images/golf-cart.jpg" alt="Golf Cart Design & Development" onerror="this.removeAttribute('src')">
+          <div class="proj-callout">A</div>
+          <div class="proj-body">
+            <h3>Golf Cart Design &amp; Development</h3>
+            <p>Developed 3D CAD models in SOLIDWORKS for an electric golf cart and optimized the design through iterative modifications to reduce weight and improve structural efficiency.</p>
+            <div class="proj-meta"><span>STACK: <b>SOLIDWORKS</b></span><span>TYPE: <b>Product Design</b></span></div>
+          </div>
+        </div>
+        <div class="proj-card">
+          <img class="proj-img" src="images/bottling-system.jpg" alt="Automated Industrial Bottling System" onerror="this.removeAttribute('src')">
+          <div class="proj-callout">B</div>
+          <div class="proj-body">
+            <h3>Automated Industrial Bottling System</h3>
+            <p>Designed and developed an automated bottling prototype integrating conveyors, sensors, actuators, and a microcontroller-based automation system for filling and capping operations.</p>
+            <div class="proj-meta"><span>STACK: <b>Microcontroller · Sensors</b></span><span>TYPE: <b>Automation</b></span></div>
+          </div>
+        </div>
+        <div class="proj-card">
+          <img class="proj-img" src="images/cnc-foam-cutter.jpg" alt="CNC Foam Cutting Machine" onerror="this.removeAttribute('src')">
+          <div class="proj-callout">C</div>
+          <div class="proj-body">
+            <h3>CNC Foam Cutting Machine</h3>
+            <p>Designed and fabricated an Arduino-based CNC foam cutting machine using a hot nichrome wire for automated precision cutting of complex 3D foam shapes.</p>
+            <div class="proj-meta"><span>STACK: <b>Arduino · CNC</b></span><span>TYPE: <b>Fabrication</b></span></div>
+          </div>
+        </div>
+        <div class="proj-card">
+          <img class="proj-img" src="images/scissor-lift.jpg" alt="Prototype Scissor Lift" onerror="this.removeAttribute('src')">
+          <div class="proj-callout">D</div>
+          <div class="proj-body">
+            <h3>Prototype Scissor Lift</h3>
+            <p>Designed and fabricated a scissor lift prototype using a pantograph mechanism to safely lift loads, applying mechanical design and fabrication principles.</p>
+            <div class="proj-meta"><span>STACK: <b>Mechanism Design</b></span><span>TYPE: <b>Fabrication</b></span></div>
+          </div>
+        </div>
+        <div class="proj-card">
+          <img class="proj-img" src="images/foil-container.jpg" alt="Aluminium Foil Container Forming Machine" onerror="this.removeAttribute('src')">
+          <div class="proj-callout">E</div>
+          <div class="proj-body">
+            <h3>Aluminium Foil Container Forming Machine</h3>
+            <p>Developed a machine to manufacture 500 ml aluminium foil containers using a pressing mechanism, and designed an alternative cement mould to overcome machining limitations.</p>
+            <div class="proj-meta"><span>STACK: <b>Press Tooling</b></span><span>TYPE: <b>Manufacturing</b></span></div>
+          </div>
+        </div>
+        <div class="proj-card">
+          <img class="proj-img" src="images/pv-thesis.jpg" alt="Photovoltaic Integrated Energy Modelling" onerror="this.removeAttribute('src')">
+          <div class="proj-callout">F</div>
+          <div class="proj-body">
+            <h3>Photovoltaic Integrated Energy Modelling (Thesis)</h3>
+            <p>Analyzed solar-grid integration using PVsyst to optimize photovoltaic system sizing and improve solar fraction through demand-side management techniques.</p>
+            <div class="proj-meta"><span>STACK: <b>PVsyst · ML</b></span><span>TYPE: <b>Thesis Research</b></span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SKILLS -->
+    <section id="trading">
+      <span class="sheet-tag">SHEET 04 / 05</span>
+      <div class="section-head reveal">
+        <span class="num">04</span>
+        <h2>Skills &amp; Interests</h2>
+        <span class="sub">TECHNICAL + PERSONAL</span>
+      </div>
+      <div class="sys-panel reveal">
+        <div>
+          <h3 style="color:var(--paper); font-size:1.05rem; margin-bottom:10px;">Technical Skills</h3>
+          <div class="chip-row">
+            <span class="chip">Mechanical Design</span>
+            <span class="chip">3D CAD Modelling</span>
+            <span class="chip">Engineering Drawings</span>
+            <span class="chip">Manufacturing &amp; Assembly</span>
+            <span class="chip">Preventive Maintenance</span>
+            <span class="chip">Quality Control</span>
+          </div>
+        </div>
+        <div>
+          <h3 style="color:var(--paper); font-size:1.05rem; margin-bottom:10px;">Personal Interests</h3>
+          <p style="max-width:none;">Outside of engineering: trading, riding, and travel.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="contact">
+      <span class="sheet-tag">SHEET 05 / 05</span>
+      <div class="section-head reveal">
+        <span class="num">05</span>
+        <h2>Get in Touch</h2>
+        <span class="sub">ISSUE REQUEST</span>
+      </div>
+      <div class="contact-block reveal">
+        <p class="lede" style="margin:0;">Open to mechanical engineering roles in manufacturing, product design, and HVAC/MEP. Based in Kathmandu, open to relocating.</p>
+        <div style="display:flex; flex-direction:column; gap:10px; align-items:flex-start;">
+          <a class="cta-btn" href="mailto:aayushmarasini@gmail.com">Email Me →</a>
+          <span class="mono" style="color:var(--muted-dim); font-size:13px;">+977-9867310565</span>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      <span>© 2026 AAYUSH — ALL RIGHTS RESERVED</span>
+      <span>DRAWN IN KATHMANDU, NP</span>
+    </footer>
+  </main>
+</div>
+
+<script>
+  // Scroll-reveal
+  const revealEls = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+  }, {threshold:0.12});
+  revealEls.forEach(el=>io.observe(el));
+
+  // Active nav highlight
+  const sections = ['profile','experience','projects','trading','contact'].map(id=>document.getElementById(id));
+  const navLinks = document.querySelectorAll('[data-target]');
+  const navObserver = new IntersectionObserver((entries)=>{
+    entries.forEach(entry=>{
+      if(entry.isIntersecting){
+        navLinks.forEach(l=>{
+          l.classList.toggle('active', l.dataset.target === entry.target.id);
+        });
+      }
+    });
+  }, {rootMargin:'-40% 0px -50% 0px'});
+  sections.forEach(s=> s && navObserver.observe(s));
+</script>
+
+</body>
+</html>
